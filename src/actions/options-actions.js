@@ -34,3 +34,8 @@ export const RESET_SEARCH_VALUE = {
 	type: ACTION_TYPE.RESET_SEARCH_VALUE,
 	payload: '',
 };
+
+export const setOnSort = (value) => ({
+	type: ACTION_TYPE.SET_ON_SORT,
+	payload: value,
+});

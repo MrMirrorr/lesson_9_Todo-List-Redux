@@ -10,12 +10,6 @@ const optionsInitialState = {
 
 export const optionsReducer = (state = optionsInitialState, { type, payload }) => {
 	switch (type) {
-		case ACTION_TYPE.SET_REFRESH_TODOS:
-			return {
-				...state,
-				refreshTodos: payload,
-			};
-
 		case ACTION_TYPE.SET_ERROR_MESSAGE:
 			return {
 				...state,
@@ -50,6 +44,18 @@ export const optionsReducer = (state = optionsInitialState, { type, payload }) =
 			return {
 				...state,
 				searchValue: payload,
+			};
+
+		case ACTION_TYPE.SET_REFRESH_TODOS:
+			return {
+				...state,
+				refreshTodos: payload,
+			};
+
+		case ACTION_TYPE.SET_ON_SORT:
+			return {
+				...state,
+				isSorted: payload,
 			};
 
 		default:

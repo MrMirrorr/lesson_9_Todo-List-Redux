@@ -16,7 +16,17 @@ export const SET_IS_LOADING_STOP = {
 	payload: false,
 };
 
-export const fetchTodos = (searchValue, isSorted) => (dispatch) => {
+export const setEditId = (id) => ({
+	type: ACTION_TYPE.SET_EDIT_ID,
+	payload: id,
+});
+
+export const RESET_EDIT_ID = {
+	type: ACTION_TYPE.RESET_EDIT_ID,
+	payload: '',
+};
+
+export const getTodos = (searchValue, isSorted) => (dispatch) => {
 	let url = 'http://localhost:3005/todos?';
 
 	if (searchValue) {

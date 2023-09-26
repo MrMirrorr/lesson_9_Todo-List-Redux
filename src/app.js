@@ -8,7 +8,7 @@ import {
 	SearchInput,
 	ErrorMsg,
 } from './components';
-import { ACTION_TYPE, SET_IS_LOADING_START, SET_IS_LOADING_STOP } from './actions';
+import { RESET_EDIT_ID, SET_IS_LOADING_START, SET_IS_LOADING_STOP } from './actions';
 import {
 	selectEditId,
 	selectErrorMsg,
@@ -18,7 +18,13 @@ import {
 	selectValue,
 } from './selectors';
 import styles from './app.module.css';
-import { RESET_VALUE, setErrorMessage, setRefreshTodos } from './actions/options-actions';
+import {
+	RESET_ERROR_MESSAGE,
+	RESET_VALUE,
+	setErrorMessage,
+	setOnSort,
+	setRefreshTodos,
+} from './actions/options-actions';
 
 export const App = () => {
 	const inputRef = useRef(null);
@@ -32,20 +38,8 @@ export const App = () => {
 	const isLoading = useSelector(selectIsLoading);
 	const errorMsg = useSelector(selectErrorMsg);
 
-	const exitEditMode = () => {
-		dispatch({ type: ACTION_TYPE.RESET_EDIT_ID });
-		dispatch(RESET_VALUE);
-	};
-
-	const onSort = () => {
-		dispatch({ type: ACTION_TYPE.SET_IS_SORTED, payload: !isSorted });
-		dispatch({ type: ACTION_TYPE.REFRESH_TODOS, payload: !refreshTodos });
-	};
-
-	const postTodo = () => {
-		if (value) {
-			dispatch(SET_IS_LOADING_START);
-
+	const postTodo = (value) => {
+		const fetchData = () => {
 			fetch('http://localhost:3005/todos', {
 				method: 'POST',
 				headers: {
@@ -55,16 +49,57 @@ export const App = () => {
 			})
 				.then(() => {
 					dispatch(setRefreshTodos(!refreshTodos));
+					dispatch(RESET_VALUE);
+					dispatch(RESET_ERROR_MESSAGE);
 				})
 				.catch((error) => {
 					dispatch(setErrorMessage('Ошибка создания новой записи'));
 					console.error('Ошибка создания новой записи:', error);
 				})
 				.finally(() => {
-					dispatch(RESET_VALUE);
 					dispatch(SET_IS_LOADING_STOP);
 				});
+		};
+
+		if (value) {
+			dispatch(SET_IS_LOADING_START);
+			fetchData();
 		}
+	};
+
+	const putTodo = (editId, value) => {
+		dispatch(SET_IS_LOADING_START);
+
+		fetch(`http://localhost:3005/todos/${editId}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify({ title: value, completed: false }),
+		})
+			.then(() => {
+				dispatch(RESET_VALUE);
+				dispatch(RESET_EDIT_ID);
+				dispatch(RESET_ERROR_MESSAGE);
+				dispatch(setRefreshTodos(!refreshTodos));
+			})
+			.catch((error) => {
+				dispatch(setErrorMessage('Ошибка обновления записи'));
+				console.error('Ошибка обновления записи:', error);
+			})
+			.finally(() => {
+				dispatch(SET_IS_LOADING_STOP);
+			});
+	};
+
+	const exitEditMode = () => {
+		dispatch(RESET_EDIT_ID);
+		dispatch(RESET_VALUE);
+	};
+
+	const onSort = () => {
+		dispatch(setOnSort(!isSorted));
+		dispatch(setRefreshTodos(!refreshTodos));
 	};
 
 	const renderButtons = () => {
@@ -72,7 +107,7 @@ export const App = () => {
 			<>
 				<Button
 					name="UPDATE_BUTTON"
-					// onClick={() => requestPutTodo(editId, value)}
+					onClick={() => putTodo(editId, value)}
 					disabled={isLoading}
 				>
 					Обновить задачу
@@ -82,7 +117,11 @@ export const App = () => {
 				</Button>
 			</>
 		) : (
-			<Button name="ADD_BUTTON" onClick={() => postTodo()} disabled={isLoading}>
+			<Button
+				name="ADD_BUTTON"
+				onClick={() => postTodo(value)}
+				disabled={isLoading}
+			>
 				Добавить задачу
 			</Button>
 		);
@@ -98,18 +137,18 @@ export const App = () => {
 				</div>
 				<div className={styles.flexRight}>
 					<SearchInput />
-					{/* <Button
+					<Button
 						name="SORT_BUTTON"
 						onClick={onSort}
 						disabled={isLoading || editId}
 						isSorted={isSorted}
 					>
 						ABab
-					</Button> */}
+					</Button>
 				</div>
 			</div>
-			{/* <SearchMsg /> */}
-			{errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+			<SearchMsg />
+			<ErrorMsg>{errorMsg}</ErrorMsg>
 			<TodosField />
 		</div>
 	);

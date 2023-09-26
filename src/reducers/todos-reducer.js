@@ -23,6 +23,18 @@ export const todosReducer = (state = todosInitialState, { type, payload }) => {
 				isLoading: payload,
 			};
 
+		case ACTION_TYPE.SET_EDIT_ID:
+			return {
+				...state,
+				editId: payload,
+			};
+
+		case ACTION_TYPE.RESET_EDIT_ID:
+			return {
+				...state,
+				editId: payload,
+			};
+
 		default:
 			return state;
 	}

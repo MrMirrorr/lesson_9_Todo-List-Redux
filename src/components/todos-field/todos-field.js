@@ -8,7 +8,7 @@ import {
 	selectRefreshTodos,
 } from '../../selectors';
 import { useEffect } from 'react';
-import { fetchTodos } from '../../actions';
+import { getTodos } from '../../actions';
 import styles from './todos-field.module.css';
 
 export const TodosField = () => {
@@ -20,7 +20,7 @@ export const TodosField = () => {
 	const refreshTodos = useSelector(selectRefreshTodos);
 
 	useEffect(() => {
-		dispatch(fetchTodos(searchValue, isSorted));
+		dispatch(getTodos(searchValue, isSorted));
 	}, [dispatch, searchValue, isSorted, refreshTodos]);
 
 	return (
