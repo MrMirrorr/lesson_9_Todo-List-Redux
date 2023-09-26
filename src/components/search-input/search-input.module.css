@@ -1,0 +1,21 @@
+.input {
+	margin-left: 20px;
+	width: 105px;
+	padding: 0.5em 1em;
+	font-size: 16px;
+	color: #ffffff;
+	outline: none;
+	background: #202124;
+	border: 1px solid #addaff;
+	border-radius: 0.3em;
+	transition: width 0.2s ease;
+}
+
+.input:focus {
+	width: 150px;
+	border-color: #0088f8;
+}
+
+.input:disabled {
+	background-color: #ccc;
+}

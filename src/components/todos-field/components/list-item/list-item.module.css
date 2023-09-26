@@ -1,0 +1,29 @@
+.listItem {
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 5px 0;
+	padding: 0.5em 1em;
+	border: 1px solid #addaff85;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: border-color 0.2s ease-in-out;
+}
+
+.listItem.editing {
+	background: #f091915d;
+}
+
+.listItem:hover {
+	border-color: #addaff;
+}
+
+.itemControls {
+	flex-shrink: 0;
+}
+
+.completed {
+	text-decoration: line-through;
+	color: #cccccc80;
+}

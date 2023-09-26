@@ -1,0 +1,76 @@
+.addBtn,
+.updateBtn,
+.cancelBtn,
+.sortBtn,
+.sortBtnSorted {
+	margin-left: 20px;
+	padding: 0.5em 1em;
+	font-size: 16px;
+	border: 0;
+	border-radius: 0.3em;
+	cursor: pointer;
+	transition: background 0.1s ease-in;
+}
+
+.addBtn,
+.updateBtn,
+.sortBtn {
+	background: #addaff;
+}
+
+.sortBtnSorted {
+	background: #addaff85;
+}
+
+.addBtn:not(:disabled):hover,
+.updateBtn:not(:disabled):hover {
+	background: #addaff85;
+}
+
+.addBtn:not(:disabled):active,
+.updateBtn:not(:disabled):active {
+	transform: translate(1px, 1px);
+}
+
+.cancelBtn {
+	background: #ff5b5b;
+}
+
+.cancelBtn:not(:disabled):hover {
+	background: #ff5b5b81;
+}
+
+.cancelBtn:not(:disabled):active {
+	transform: translate(1px, 1px);
+}
+
+.editBtn,
+.deleteBtn {
+	margin-left: 10px;
+	padding: 2px 5px;
+	background: #313131;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: transform 0.1s ease-in-out;
+}
+
+.editBtn:not(:disabled):hover,
+.deleteBtn:not(:disabled):hover {
+	transform: scale(1.1);
+}
+
+.editBtn:not(:disabled):active,
+.deleteBtn:not(:disabled):active {
+	transform: scale(1);
+}
+
+.addBtn:disabled,
+.updateBtn:disabled,
+.cancelBtn:disabled,
+.sortBtn:disabled,
+.sortBtnSorted:disabled,
+.editBtn:disabled,
+.deleteBtn:disabled {
+	background: #ccc;
+}

@@ -1,0 +1,29 @@
+.list {
+	padding: 0 5px;
+	max-height: 80vh;
+	list-style: none;
+	overflow-y: auto;
+	border: 1px solid #fff;
+	border-radius: 10px;
+}
+
+.loader {
+	padding: 20px 0;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	color: #fff;
+	animation: loading 0.7s linear 0s infinite normal none;
+}
+
+@keyframes loading {
+	0% {
+		color: #addaff;
+	}
+	50% {
+		color: #0062b3;
+	}
+	100% {
+		color: #addaff;
+	}
+}

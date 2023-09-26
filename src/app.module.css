@@ -1,0 +1,18 @@
+.app {
+	margin: 0 auto;
+	padding: 0 10px;
+	max-width: 800px;
+}
+
+.title {
+	text-align: center;
+}
+
+.flexWrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+.flexRight {
+	text-align: right;
+}
