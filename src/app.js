@@ -36,7 +36,6 @@ export const App = () => {
 	const refreshTodos = useSelector(selectRefreshTodos);
 	const editId = useSelector(selectEditId);
 	const isLoading = useSelector(selectIsLoading);
-	const errorMsg = useSelector(selectErrorMsg);
 
 	const postTodo = (value) => {
 		const fetchData = () => {
@@ -148,7 +147,7 @@ export const App = () => {
 				</div>
 			</div>
 			<SearchMsg />
-			<ErrorMsg>{errorMsg}</ErrorMsg>
+			<ErrorMsg />
 			<TodosField />
 		</div>
 	);

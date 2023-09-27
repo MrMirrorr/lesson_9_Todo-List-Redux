@@ -2,15 +2,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './search-input.module.css';
 import { selectEditId, selectSearchValue } from '../../selectors';
 import { setSearchValue } from '../../actions/options-actions';
+import { useSearchTodo } from '../../hooks';
+import { useEffect } from 'react';
 
 export const SearchInput = () => {
 	const dispatch = useDispatch();
 	const editId = useSelector(selectEditId);
-	const searchValue = useSelector(selectSearchValue);
+	const searchValueFromRedux = useSelector(selectSearchValue);
 
-	const onChangeSearchValue = (e) => {
-		dispatch(setSearchValue(e.target.value));
-	};
+	const { searchValue, onChangeSearchValue, debouncedSearchValue } = useSearchTodo();
+
+	useEffect(() => {
+		if (debouncedSearchValue !== searchValueFromRedux) {
+			dispatch(setSearchValue(debouncedSearchValue));
+		}
+	}, [debouncedSearchValue, dispatch, searchValueFromRedux]);
 
 	return (
 		<>
